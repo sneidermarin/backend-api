@@ -1,23 +1,19 @@
-import { db } from '../db/connection.js';
+import db from '../db/connection.js';
 
-export const obtenerUsuarios = async (req, res) => {
+export const registrarUsuario = async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM usuarios');
-    res.json(rows);
-  } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener los usuarios', error });
-  }
-};
+    const { nombre, correo, password, rol } = req.body;
 
-export const crearUsuario = async (req, res) => {
-  const { nombre, correo, rol } = req.body;
-  try {
-    const [resultado] = await db.query(
-      'INSERT INTO usuarios (nombre, correo, rol) VALUES (?, ?, ?)',
-      [nombre, correo, rol]
+    const [result] = await db.execute(
+      'INSERT INTO usuarios (nombre, correo, password, rol) VALUES (?, ?, ?, ?)',
+      [nombre, correo, password, rol]
     );
-    res.json({ id: resultado.insertId, nombre, correo, rol });
+
+    res.status(201).json({ mensaje: 'Usuario registrado', id: result.insertId });
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al crear usuario', error });
+    console.error('Error al registrar usuario:', error);
+    res.status(500).json({ mensaje: 'Error en el servidor', error });
   }
 };
+
+
