@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import usuarioRoutes from './routes/usuarioRoutes.js';
+import usuarioRoutes from './routes/usuariosRoutes.js';
 import dotenv from 'dotenv';
 
 dotenv.config();

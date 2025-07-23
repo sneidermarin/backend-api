@@ -1,4 +1,4 @@
-import { db } from '../models/connection.js';
+import { db } from '../db/connection.js';
 
 export const obtenerUsuarios = async (req, res) => {
   try {
